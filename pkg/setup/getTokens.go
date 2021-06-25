@@ -6,10 +6,9 @@ import (
 	"regexp"
 )
 
-
 func GetTelegramAPItoken() (string, error) {
 	var token string
-	configFileContent, err := ioutil.ReadFile("api/config.txt")
+	configFileContent, err := ioutil.ReadFile("C:\\Users\\ragon\\projects\\anusRipper\\api")
 	if err != nil {
 		panic(err)
 	}
@@ -17,7 +16,7 @@ func GetTelegramAPItoken() (string, error) {
 	statementTelegramAPItoken := regexp.MustCompile("TelegramAPI_token(.\\s)=(.\\s)(.*)\n")
 	token = statementTelegramAPItoken.FindString(string(configFileContent))
 
-	fmt.Println(token)
+	fmt.Println(configFileContent)
 
-	return "", nil
+	return token, nil
 }
