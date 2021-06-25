@@ -6,6 +6,10 @@ import (
 )
 
 func main() {
-	fmt.Println("Cakl")
-	setup.GetTelegramAPItoken()
+	token, err := setup.GetTelegramAPItoken()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Got Telegram API token: %s", token)
 }
