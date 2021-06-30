@@ -16,5 +16,8 @@ func GetTelegramAPItoken() (string, error) {
 	configLine := statementTelegramAPItoken.FindString(string(configFileContent))
 	token = regexp.MustCompile("(\\d+):(.*)").FindString(configLine)
 
-	return token, nil
+	var a int = 10
+	a += 1
+
+	return token, nil //test commit
 }
