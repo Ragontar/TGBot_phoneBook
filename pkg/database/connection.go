@@ -11,8 +11,6 @@ import (
 var db *gorm.DB
 
 func Init() *gorm.DB {
-	//dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable" //Переписать
-
 	cfgMap := setup.GetCfgSet().ConfigMap
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s", cfgMap["host"], cfgMap["user"],
