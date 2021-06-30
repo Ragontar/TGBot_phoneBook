@@ -7,7 +7,7 @@ import (
 
 func TestCfgParser(t *testing.T) {
 	const input = `
-TelegramAPI_token = 1818272836:AAEJ16PJAKZJVsx3pO2u9kS6laBKacxr9A8
+TelegramAPI_token = 1488:ABCD76F6
 
 host        = 1host1
 user        = 1user1
@@ -26,7 +26,7 @@ sslmode     = 1sslmode1
 	//	fmt.Printf("%s   :   %s\n", key, val)
 	//}
 
-	if cfgSet.ConfigMap["TelegramAPI_token"] != "1818272836:AAEJ16PJAKZJVsx3pO2u9kS6laBKacxr9A8" {
+	if cfgSet.ConfigMap["TelegramAPI_token"] != "1488:ABCD76F6" {
 		isOk = false
 	}
 	if cfgSet.ConfigMap["host"] != "1host1" {
