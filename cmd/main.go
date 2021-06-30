@@ -2,14 +2,30 @@ package main
 
 import (
 	"fmt"
-	"github.com/Ragontar/anusRipper/pkg/setup"
+	"github.com/Ragontar/TGBot_phoneBook/pkg/handlers"
+	"net"
 )
 
 func main() {
-	token, err := setup.GetTelegramAPItoken()
+	listener, err := net.Listen("tcp", ":4545")
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		return
+	}
+	defer listener.Close()
+
+	fmt.Println("Server is listening...")
+
+	for {
+		conn, err := listener.Accept()
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		err = handlers.TestHandler(conn)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 
-	fmt.Printf("Got Telegram API token: %s", token)
 }
