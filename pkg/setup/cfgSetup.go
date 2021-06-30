@@ -38,6 +38,7 @@ func initCfgStructure() ConfigSet {
 	cfgSet.ConfigMap["user"] = ""
 	cfgSet.ConfigMap["password"] = ""
 	cfgSet.ConfigMap["dbname"] = ""
+	cfgSet.ConfigMap["port"] = ""
 	cfgSet.ConfigMap["sslmode"] = ""
 	cfgSet.ConfigMap["TelegramAPI_token"] = ""
 

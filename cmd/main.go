@@ -22,10 +22,13 @@ func main() {
 			fmt.Println(err)
 			return
 		}
-		err = handlers.TestHandler(conn)
-		if err != nil {
-			fmt.Println(err)
-		}
+
+		go func() {
+			err := handlers.TestHandler(conn)
+			if err != nil {
+				fmt.Println(err)
+			}
+		}()
 	}
 
 }

@@ -13,6 +13,7 @@ host        = 1host1
 user        = 1user1
 password    = 1password1
 dbname      = 1dbname1
+port		= 22port22
 sslmode     = 1sslmode1
 `
 
@@ -42,6 +43,9 @@ sslmode     = 1sslmode1
 		isOk = false
 	}
 	if cfgSet.ConfigMap["sslmode"] != "1sslmode1" {
+		isOk = false
+	}
+	if cfgSet.ConfigMap["port"] != "22port22" {
 		isOk = false
 	}
 
