@@ -1,4 +1,4 @@
-package database
+package database_gorm
 
 import (
 	"github.com/Ragontar/TGBot_phoneBook/pkg/setup"

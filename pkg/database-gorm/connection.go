@@ -1,12 +1,14 @@
-package database
+package database_gorm
 
 /*
 
-Тут реализованы методы подключения DB PostgreSQL к проекту. Драйвер: pgx.
+!!! НЕ ИСПОЛЬЗУЕТСЯ В ДАННЫЙ МОМЕНТ !!!
 
-func Init() *pgx.Conn  ---   инициализирует подключение. Параметры dsn-строки читаются из структуры с конфигом
+Тут реализованы методы подключения PostgreSQL к проекту с помощью GORM. Драйвер: pgx.
+
+func Init() *gorm.DB   ---   инициализирует подключение. Параметры dsn-строки читаются из структуры с конфигом
 							 (см. setup/cfgSetup.go) Также, возвращает базу данных.
-func GetDB() *pgx.Conn ---   Лучше использовать этот метод для получения DB. В нем же реализована инициализация
+func GetDB() *gorm.DB  ---   Лучше использовать этот метод для получения DB. В нем же реализована инициализация
 							 подключения.
 
 PS Перед инициализацией подключение конфигурационная структура должна быть определена и корректно заполнена!!!
@@ -15,33 +17,30 @@ PS Перед инициализацией подключение конфигу
 */
 
 import (
-	"context"
 	"fmt"
 	"github.com/Ragontar/TGBot_phoneBook/pkg/setup"
-	"github.com/jackc/pgx/v4"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 	"time"
 )
 
-var db *pgx.Conn
+var db *gorm.DB
 
-func Init() *pgx.Conn {
+func Init() *gorm.DB {
 	cfgMap := setup.GetCfgSet().ConfigMap
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s", cfgMap["host"], cfgMap["user"],
 		cfgMap["password"], cfgMap["dbname"], cfgMap["port"], cfgMap["sslmode"])
 
 	fmt.Println(dsn)
-
-	//db, err := sql.Open("pq", dsn)
-	db, err := pgx.Connect(context.Background(), dsn)
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
-
 	return db
 }
 
-func GetDB() *pgx.Conn {
+func GetDB() *gorm.DB {
 	if db == nil {
 		db = Init()
 		sleep := time.Duration(1)
