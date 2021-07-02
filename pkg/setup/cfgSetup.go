@@ -79,6 +79,9 @@ func configParser(configFileContent []byte, cfgSet ConfigSet) ConfigSet {
 
 func Init(configPath string) ConfigSet {
 
+	if cfgSet.IsOk {
+		return cfgSet
+	}
 	configFileContent, err := ioutil.ReadFile(configPath)
 	if err != nil {
 		cfgSet.IsOk = false
