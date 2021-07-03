@@ -54,3 +54,17 @@ func TestGetAllRecords(t *testing.T) {
 	}
 	fmt.Println(records)
 }
+
+func TestDeleteRecordByID(t *testing.T) {
+	setup.Init("/home/reaver/GolandProjects/TGBot_phoneBook/cfg/config.txt")
+
+	err := DeleteRecordByID(100, 3)
+	if err != nil {
+		setup.GetLogger().Println("Error deleting phonebook record from userId = 100:")
+		fmt.Println(err)
+		os.Exit(40)
+	} else {
+		setup.GetLogger().Printf("Deleted phonebook record from userId = 100")
+	}
+
+}
