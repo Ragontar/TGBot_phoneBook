@@ -4,7 +4,7 @@ package crud
 
 Methods, implementing adding new data to DB.
 
-func registerUser(userId int64) error   ---   adds new user by telegram userId. Returns error otherwise.
+func registerUser(userId int64) error   ---   adds a new user by telegram userId. Returns an error otherwise.
 
 func addToGlobalPhonebook(name string, number string) (int, error)   ---   adds a record to the global phonebook,
 	returns id of the new record or -1 and non-nil error in case of failure
@@ -21,10 +21,12 @@ import (
 func registerUser(userId int64) error {
 	db := database.GetDB()
 	arr := make([]int, 0)
-	logger := setup.GetLogger()
 	sqlString := fmt.Sprintf("INSERT INTO users (user_id, phonebook) VALUES ($1, $2);")
+
+	logger := setup.GetLogger()
 	logger.Printf("Executed query: %s", sqlString)
 	logger.Printf("VALUES: %v, %v", userId, arr)
+
 	_, err := db.Exec(context.Background(), sqlString, userId, arr)
 	if err != nil {
 		setup.GetLogger().Printf("Failed to register user %d: %v", userId, err)

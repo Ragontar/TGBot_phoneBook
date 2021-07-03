@@ -1,5 +1,11 @@
 package setup
 
+/*
+
+Implementation of logger which outputs in records.log file
+
+*/
+
 import (
 	"log"
 	"os"
