@@ -26,3 +26,31 @@ func TestAddToGlobalPhonebook(t *testing.T) {
 		setup.GetLogger().Printf("Added Vasya with phone 14881488 and id %v", id)
 	}
 }
+
+func TestGetRecordByName(t *testing.T) {
+	setup.Init("/home/reaver/GolandProjects/TGBot_phoneBook/cfg/config.txt")
+
+	records, err := GetRecordByName(100, "vasya")
+	if err != nil {
+		setup.GetLogger().Println("Error selecting Vasyas with ids 1, 3, 6, 8")
+		fmt.Println(err)
+		os.Exit(40)
+	} else {
+		setup.GetLogger().Printf("Selected Vasyas with ids 1, 3, 6, 8 %v", records)
+	}
+	fmt.Println(records)
+}
+
+func TestGetAllRecords(t *testing.T) {
+	setup.Init("/home/reaver/GolandProjects/TGBot_phoneBook/cfg/config.txt")
+
+	records, err := GetAllRecords(200)
+	if err != nil {
+		setup.GetLogger().Println("Error getting all records from userId = 100:")
+		fmt.Println(err)
+		os.Exit(40)
+	} else {
+		setup.GetLogger().Printf("Got all records of userId = 100, %v", records)
+	}
+	fmt.Println(records)
+}
