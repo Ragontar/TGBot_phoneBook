@@ -2,7 +2,7 @@ package crud
 
 /*
 
-Methods, implementing adding new data to DB.
+Methods, implementing addition of new data to DB.
 
 func registerUser(userId int64) error   ---   adds a new user by telegram userId. Returns an error otherwise.
 

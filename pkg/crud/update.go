@@ -9,6 +9,8 @@ import (
 
 Methods to update existing data in database
 
+DeleteRecordByID(userID int64, recordID int) error --- updates user's phonebook slice by removing recordID value
+
 */
 
 func DeleteRecordByID(userID int64, recordID int) error {

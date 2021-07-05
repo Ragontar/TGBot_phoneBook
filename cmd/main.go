@@ -1,34 +1,55 @@
 package main
 
 import (
-	"fmt"
-	"github.com/Ragontar/TGBot_phoneBook/pkg/handlers"
-	"net"
+	"encoding/json"
+	"github.com/Ragontar/TGBot_phoneBook/pkg/bot"
+	"github.com/Ragontar/TGBot_phoneBook/pkg/setup"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 func main() {
-	listener, err := net.Listen("tcp", ":4545")
+	// Для тестов сборки, переделать
+	setup.Init("cmd/config.txt")
+
+	b, err := bot.NewBot(setup.GetCfgSet().ConfigMap["TelegramAPI_token"])
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatal("error creating new bot")
 	}
-	defer listener.Close()
 
-	fmt.Println("Server is listening...")
+	//err = b.SetWebhook("https://724295c21ffe.ngrok.io")
+	err = b.SetWebhook("https://telegram-pb-bot.herokuapp.com/1818272836:AAEJ16PJAKZJVsx3pO2u9kS6laBKacxr9A8")
+	if err != nil {
+		log.Fatal("error setting webhook")
+	}
 
-	for {
-		conn, err := listener.Accept()
+	ch := make(chan bot.Update, 10)
+
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+
+		var update bot.Update
+		body, _ := ioutil.ReadAll(r.Body)
+		err := json.Unmarshal(body, &update)
 		if err != nil {
-			fmt.Println(err)
-			return
+			log.Println("error decoding update")
 		}
 
-		go func() {
-			err := handlers.TestHandler(conn)
-			if err != nil {
-				fmt.Println(err)
-			}
-		}()
+		ch <- update
+	})
+
+	go func() {
+		err := http.ListenAndServe(":8080", nil)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	for update := range ch {
+		_, err2 := b.SendMessage(update.Message.Chat.Id, update.Message.Text)
+		if err2 != nil {
+			log.Println("Error sending message")
+		}
 	}
 
 }
